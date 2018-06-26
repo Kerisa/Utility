@@ -101,11 +101,13 @@ void UsbScanner::UsbScannerImpl::SaveChar(uint16_t vkey, uint16_t scancode, bool
 
 	if (vkey == VK_SPACE)
 		name[0] = ' ';
+	else if (vkey == VK_RETURN)
+		name[0] = '\n';
 	else if (strlen(name) > 1)
 		return;
 
 	SHORT cap2 = !!(GetKeyState(VK_CAPITAL) & 1);
-	SHORT shift2 = !!(GetKeyState(VK_LSHIFT) & 0x8000);
+	SHORT shift2 = !!(GetKeyState(VK_LSHIFT) & 0x8000) || !!(GetKeyState(VK_RSHIFT) & 0x8000);
 
 	// GetKeyNameText 返回的是大写字母
 	name[0] = cap2 ? toupper(name[0]) : tolower(name[0]);
